@@ -15,7 +15,7 @@ const Search = ({ placeholder, handler, icon }) => {
             <Form.Item
                 name={`search`}
             >
-                <Input onChange={(e) => {
+                <Input className='h-[42px]' onChange={(e) => {
                     if (handler) {
                         handler(e.target.value)
                     }
