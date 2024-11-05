@@ -30,7 +30,7 @@ const Sidebar = () => {
     return (
         <div className='px-4 pb-10 flex justify-start flex-col gap-3 sidebar'>
             {/* <p className='text-6xl text-center text-[var(--bg-white)] my-4 font-bold'>ilera</p> */}
-            <div className='center-center'>
+            <div className='start-center'>
                 <img src={logo} alt="" srcset="" className='w-28' />
             </div>
             {SidebarLink?.map((item) => (

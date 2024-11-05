@@ -97,7 +97,7 @@ body {
   }
 
   .button-blue {
-    @apply px-4 py-1 rounded-3xl flex justify-center items-center w-fit gap-2 bg-[var(--color-white)] text-[var(--color-blue)] border border-[var(--color-blue)] hover:scale-105 transition-all active:scale-95 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 card-shadow
+    @apply px-4 py-1 rounded-md flex justify-center items-center w-fit gap-2 bg-[var(--color-blue-500)] text-[var(--color-white)] border border-[var(--color-blue-500)] hover:scale-105 transition-all active:scale-95 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 card-shadow
   }
 
   .heading {

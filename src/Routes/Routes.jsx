@@ -15,6 +15,7 @@ import AdminRoutes from "../PrivetRoutes/AdminRoutes";
 import VendorRequest from "../Pages/Dashboard/VendorRequest";
 import Users from "../Pages/Dashboard/Users";
 import Vendors from "../Pages/Dashboard/Vendors";
+import Events from "../Pages/Dashboard/Events";
 
 export const Routes = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ export const Routes = createBrowserRouter([
             {
                 path: '/users',
                 element: <Users />
+            },
+            {
+                path: '/events',
+                element: <Events />
             },
             {
                 path: '/vendors',
