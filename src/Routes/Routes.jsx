@@ -14,6 +14,7 @@ import TermsCondition from "../Pages/Dashboard/TermsCondition";
 import AdminRoutes from "../PrivetRoutes/AdminRoutes";
 import VendorRequest from "../Pages/Dashboard/VendorRequest";
 import Users from "../Pages/Dashboard/Users";
+import Vendors from "../Pages/Dashboard/Vendors";
 
 export const Routes = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const Routes = createBrowserRouter([
             {
                 path: '/users',
                 element: <Users />
+            },
+            {
+                path: '/vendors',
+                element: <Vendors />
             },
             {
                 path: '/management',
