@@ -22,12 +22,12 @@ const Login = () => {
     // handler
     const onSubmitLoginForm = (value) => {
         LoginUser(value).unwrap().then((res) => {
-            if (res.data?.role !== 'ADMIN') {
+            if (res.data?.user?.authId?.role !== 'ADMIN') {
                 return toast.error('You are not authorized to access this page.')
             }
-            localStorage.setItem('token', JSON.stringify(res?.token))
+            localStorage.setItem('token', JSON.stringify(res?.data?.accessToken))
             toast.success(res.data?.message || 'logged in successfully')
-            window.location.reload()
+            // window.location.reload()
             return navigate(location?.state || '/')
         })
             .catch((err) => toast.error(err.data.message || 'something went wrong'))

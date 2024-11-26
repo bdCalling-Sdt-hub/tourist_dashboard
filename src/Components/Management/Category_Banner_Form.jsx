@@ -26,10 +26,10 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
             const formateData = {
                 name: value?.name,
             }
-            if (Files.length > 0) {
-                formateData.img = Files[0]
-            }
-            const formData = makeFormData(formateData)
+            // if (Files.length > 0) {
+            //     formateData.img = Files[0]
+            // }
+            const formData = formateData//makeFormData(formateData)
             if (action === 'update') {
                 updateCategory({ id: data?._id, data: formData }).unwrap().then((res) => {
                     if (res.success) {
@@ -42,9 +42,9 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
                     }
                 }).catch((err) => toast.error(err.data?.message || 'something went wrong'))
             } else {
-                if (Files.length <= 0) {
-                    toast.error('Please select a Category image')
-                }
+                // if (Files.length <= 0) {
+                //     toast.error('Please select a Category image')
+                // }
                 addCategory(formData).unwrap().then((res) => {
                     if (res.success) {
                         toast.success(res.message || 'Category Added Successfully')
@@ -62,7 +62,7 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
             }
             if (action === 'update') {
                 const FormateData = {
-                    img: Files[0]
+                    banner_img: Files[0]
                 }
                 // console.log(data)
                 // return
@@ -78,7 +78,7 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
                 }).catch((err) => toast.error(err.data?.message || 'something went wrong'))
             } else {
                 const FormateData = {
-                    img: Files[0]
+                    banner_img: Files[0]
                 }
                 const FormData = makeFormData(FormateData)
                 addBanner(FormData).unwrap().then((res) => {
@@ -128,7 +128,7 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
                         ]}
                     >
                         {
-                            item?.type === 'file' ? <ImageUpload key={action} action={action} accept={item?.accept || 'image'} image={data?.img} Files={Files} setFiles={setFiles} multiple={false} /> : <Input placeholder={item?.placeholder} />
+                            item?.type === 'file' ? <ImageUpload key={action} action={action} accept={item?.accept || 'image'} image={data?.banner_img} Files={Files} setFiles={setFiles} multiple={false} /> : <Input placeholder={item?.placeholder} />
                         }
                     </Form.Item>)
                 }

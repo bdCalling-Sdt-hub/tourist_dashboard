@@ -1,5 +1,5 @@
 import React from 'react'
-import RequestTable from '../../Components/VendorRequest.jsxt/RequestTable'
+import RequestTable from '../../Components/VendorRequest/RequestTable'
 import PageHeading from '../../Components/Shared/PageHeading'
 
 const VendorRequest = () => {

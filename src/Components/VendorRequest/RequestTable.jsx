@@ -1,38 +1,18 @@
 import React, { useState } from 'react';
 import { Button, Table, Modal, Input } from 'antd';
-
+import { useAcceptVendorMutation, useDeclineRequestMutation, useGetAllVendorQuery } from '../../Redux/Apis/vendorApis';
+import { useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 const { TextArea } = Input;
-
-const dataSource = [
-  {
-    key: '1',
-    serialNo: '#1233',
-    userName: 'Kathryn Murp',
-    email: 'ca@gmail.com',
-    contact: '+122333',
-  },
-  {
-    key: '2',
-    serialNo: '#1233',
-    userName: 'Devon Lane',
-    email: 'ca@gmail.com',
-    contact: '+1557296',
-  },
-  {
-    key: '3',
-    serialNo: '#1233',
-    userName: 'Foysal Rahman',
-    email: 'ca@gmail.com',
-    contact: '+184230',
-  },
-];
-
 const RequestTable = () => {
+  const { data, isLoading } = useGetAllVendorQuery()
+  const [approve, { isLoading: Loading }] = useAcceptVendorMutation()
+  const [declined,] = useDeclineRequestMutation()
   const [isApproveModalVisible, setApproveModalVisible] = useState(false);
   const [isCancelModalVisible, setCancelModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [cancelReason, setCancelReason] = useState("");
-
+  const location = useLocation()
   const handleApprove = (record) => {
     setSelectedRecord(record);
     setApproveModalVisible(true);
@@ -44,30 +24,40 @@ const RequestTable = () => {
   };
 
   const confirmApprove = () => {
-    // Handle approval logic here
-    console.log(`Approved user: ${selectedRecord.userName}`);
+    approve(selectedRecord._id).unwrap()
+      .then(res => {
+        toast.success(res.message || 'Request Approved')
+      }).catch(err => {
+        toast.error(err?.data?.message || 'Something Went wrong')
+      })
     setApproveModalVisible(false);
     setSelectedRecord(null);
   };
 
   const confirmCancel = () => {
-    // Handle cancellation logic here
-    console.log(`Cancelled user: ${selectedRecord.userName} for reason: ${cancelReason}`);
+    declined({ id: selectedRecord._id, reasons: cancelReason, status: 'declined' }).unwrap()
+      .then(res => {
+        console.log(res)
+        toast.success(res.message || 'Request declined')
+      }).catch(err => {
+        console.log(err)
+        toast.error(err?.data?.message || 'Something Went wrong')
+      })
     setCancelModalVisible(false);
     setSelectedRecord(null);
     setCancelReason("");
   };
 
   const columns = [
-    {
-      title: 'SL no.',
-      dataIndex: 'serialNo',
-      key: 'serialNo',
-    },
+    // {
+    //   title: 'SL no.',
+    //   dataIndex: 'serialNo',
+    //   key: 'serialNo',
+    // },
     {
       title: 'User Name',
-      dataIndex: 'userName',
-      key: 'userName',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: 'Email',
@@ -76,8 +66,8 @@ const RequestTable = () => {
     },
     {
       title: 'Contact',
-      dataIndex: 'contact',
-      key: 'contact',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
     },
     {
       title: 'Actions',
@@ -106,8 +96,7 @@ const RequestTable = () => {
 
   return (
     <div className="p-4">
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
-
+      <Table dataSource={location.pathname == '/' ? data?.data?.slice(0, 4) : data?.data || []} columns={columns} pagination={false} />
       {/* Approve Modal */}
       <Modal
         title="Confirm Approval"
@@ -131,7 +120,7 @@ const RequestTable = () => {
         ]}
         centered
       >
-        <p>Are you sure you want to approve {selectedRecord?.userName}?</p>
+        <p>Are you sure you want to approve {selectedRecord?.name}?</p>
       </Modal>
 
       {/* Cancel Modal */}
@@ -157,7 +146,7 @@ const RequestTable = () => {
         ]}
         centered
       >
-        <p>Are you sure you want to cancel {selectedRecord?.userName}?</p>
+        <p>Are you sure you want to cancel {selectedRecord?.name}?</p>
         <TextArea
           rows={4}
           value={cancelReason}

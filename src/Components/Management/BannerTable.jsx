@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import UserImageName from '../Shared/UserImageName'
 import { Modal, Table } from 'antd'
-import {  MdDelete, MdEdit,MdNotInterested } from 'react-icons/md'
+import { MdDelete, MdEdit, MdNotInterested } from 'react-icons/md'
 import { FaCheck } from 'react-icons/fa6'
 import { RxCross2 } from 'react-icons/rx'
 import ChangeBannerOrder from './ChangeBannerOrder'
@@ -14,7 +14,6 @@ import Button from '../Shared/Button'
 const BannerTable = ({ set_selected_data, set_open_category_banner_modal, setAction }) => {
     // states
     const [page, setPage] = useState(new URLSearchParams(location.search).get('page') || 1)
-    const [openOrderChangeModal, setOpenOrderChangeModal] = useState(false)
     //rtk query
     const { data, isLoading, isError, error } = useGetBannerQuery(page)
     const [deleteBanner, { isLoading: isLoadingDeleteBanner }] = useDeleteBannerMutation()
@@ -50,16 +49,16 @@ const BannerTable = ({ set_selected_data, set_open_category_banner_modal, setAct
         //     dataIndex: 'key',
         //     key: 'key'
         // },
-        {
-            title: 'Sl No',
-            dataIndex: 'order',
-            key: 'order',
-        },
+        // {
+        //     title: 'Sl No',
+        //     dataIndex: 'order',
+        //     key: 'order',
+        // },
         {
             title: 'Banner',
             dataIndex: 'banner',
             key: 'banner',
-            render: (_, record) => <UserImageName image={record?.img} />
+            render: (_, record) => <UserImageName image={record?.banner_img} />
         },
         {
             title: 'actions',

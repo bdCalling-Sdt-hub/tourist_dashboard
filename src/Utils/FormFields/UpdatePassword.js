@@ -1,6 +1,6 @@
 export const UpdatePasswordFields = [
     {
-        name: 'old_Password',
+        name: 'oldPassword',
         label: 'Current Password',
         placeholder: 'insert your password',
         required: true,
@@ -8,7 +8,7 @@ export const UpdatePasswordFields = [
         type: 'password',
     },
     {
-        name: 'password',
+        name: 'newPassword',
         label: 'New Password',
         placeholder: 'insert your password',
         required: true,
@@ -16,7 +16,7 @@ export const UpdatePasswordFields = [
         type: 'password',
     },
     {
-        name: 'confirm_password',
+        name: 'confirmPassword',
         label: 'Confirm New Password',
         placeholder: 'insert your Confirm password',
         required: true,

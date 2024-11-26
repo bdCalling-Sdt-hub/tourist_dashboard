@@ -10,15 +10,15 @@ import Loading from '../Shared/Loading'
 const UpdatePassword = () => {
     //states
     const [form] = Form.useForm()
-    const [old_password_type, set_old_password_type] = useState(null)
+    const [oldPassword_type, set_oldPassword_type] = useState(null)
     const [password_type, set_password_type] = useState(null)
-    const [confirm_password_type, set_confirm_password_type] = useState(null);
+    const [confirmPassword_type, set_confirmPassword_type] = useState(null);
     // rtk query 
     const [changePassword, { isLoading }] = useChangePasswordMutation()
     // handler
     const onSubmitResetForm = value => {
-        if (value?.old_password === value.password) return toast.error('your old password cant be your new password')
-        if (value?.confirm_password !== value.password) return toast.error("confirm password doesn't match")
+        if (value?.oldPassword === value.newPassword) return toast.error('your old password cant be your new password')
+        if (value?.confirmPassword !== value.newPassword) return toast.error("confirm password doesn't match")
         changePassword(value).unwrap().then((res) => {
             if (res.success) {
                 toast.success(res.message || 'Password Changed Successfully')
@@ -56,18 +56,18 @@ const UpdatePassword = () => {
                             }
                         ]}
                     >
-                        <Input className='input' type={item?.name === 'confirm_password' ? `${confirm_password_type || item?.type}` : item?.name === 'old_Password' ? `${old_password_type || item?.type}` : `${password_type || item?.type}`} placeholder={item?.placeholder} suffix={item?.name === 'password' ? (password_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
+                        <Input className='input' type={item?.name === 'confirmPassword' ? `${confirmPassword_type || item?.type}` : item?.name === 'oldPassword' ? `${oldPassword_type || item?.type}` : `${password_type || item?.type}`} placeholder={item?.placeholder} suffix={item?.name === 'newPassword' ? (password_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
                             set_password_type(null)
                         }} /> : <FaEyeSlash className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
                             set_password_type('text')
-                        }} />) : item?.name === 'confirm_password' ? (confirm_password_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
-                            set_confirm_password_type(null)
+                        }} />) : item?.name === 'confirmPassword' ? (confirmPassword_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
+                            set_confirmPassword_type(null)
                         }} /> : <FaEyeSlash className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
-                            set_confirm_password_type('text')
-                        }} />) : item?.name === 'old_Password' ? (old_password_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
-                            set_old_password_type(null)
+                            set_confirmPassword_type('text')
+                        }} />) : item?.name === 'oldPassword' ? (oldPassword_type ? <FaEye className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
+                            set_oldPassword_type(null)
                         }} /> : <FaEyeSlash className='text-lg hover:scale-105 active:scale-95 cursor-pointer' onClick={() => {
-                            set_old_password_type('text')
+                            set_oldPassword_type('text')
                         }} />) : ''} />
                     </Form.Item>
                 })

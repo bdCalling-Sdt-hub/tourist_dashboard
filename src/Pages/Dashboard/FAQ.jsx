@@ -53,7 +53,7 @@ const FAQ = () => {
                                     padding: '4px'
                                 }} />
                             </div>
-                            <p className='bg-[var(--bg-white)] p-2 rounded-md my-2 mb-4'>{item.question}</p>
+                            <p className='bg-[var(--bg-white)] rounded-md my-2 mb-4'>{item.questions}</p>
                             <p>Answer</p>
                             <p className='leading-7 text-justify mt-2'>{item?.answer}</p>
                         </div>

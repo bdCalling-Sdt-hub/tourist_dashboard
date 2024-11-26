@@ -16,6 +16,7 @@ import VendorRequest from "../Pages/Dashboard/VendorRequest";
 import Users from "../Pages/Dashboard/Users";
 import Vendors from "../Pages/Dashboard/Vendors";
 import Events from "../Pages/Dashboard/Events";
+import AboutUs from "../Pages/Dashboard/AboutUs";
 
 export const Routes = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ export const Routes = createBrowserRouter([
             {
                 path: '/privacy-policy',
                 element: <PrivacyPolicy />
+            },
+            {
+                path: '/about-us',
+                element: <AboutUs />
             },
             {
                 path: '/terms-&-condition',

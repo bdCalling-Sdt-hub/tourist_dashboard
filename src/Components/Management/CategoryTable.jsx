@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import UserImageName from '../Shared/UserImageName'
-import {  Table } from 'antd'
-import {  MdDelete, MdEdit, MdNotInterested } from 'react-icons/md'
+import { Table } from 'antd'
+import { MdDelete, MdEdit, MdNotInterested } from 'react-icons/md'
 import { useDeleteCategoryMutation, useGetCategoryQuery } from '../../Redux/Apis/categoryApi'
 import Loading from '../Shared/Loading'
 import toast from 'react-hot-toast'
@@ -37,6 +37,7 @@ const CategoryTable = ({ set_selected_data, set_open_category_banner_modal, setA
             </span>
         ));
     }
+    console.log(data)
     // table columns
     const columns = [
         // {
@@ -74,8 +75,8 @@ const CategoryTable = ({ set_selected_data, set_open_category_banner_modal, setA
     ]
     return (
         <>
-            <Table dataSource={data?.data} columns={columns} pagination={{
-                pageSize: data?.pagination.itemsPerPage || 10,
+            <Table dataSource={data?.data || []} columns={columns} pagination={{
+                pageSize: data?.pagination?.itemsPerPage || 10,
                 total: data?.pagination?.totalItems || 0,
                 current: page || 1,
                 onChange: (page) => setPage(page),

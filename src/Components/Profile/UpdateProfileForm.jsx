@@ -14,7 +14,7 @@ const UpdateProfileForm = ({ image, data }) => {
     //handler
     const onUpdateProfile = values => {
         if (image) {
-            values.img = image
+            values.profile_image = image
         }
         const formData = makeFormData(values)
         updateProfile(formData).unwrap().then((res) => {
@@ -33,7 +33,7 @@ const UpdateProfileForm = ({ image, data }) => {
         if (!data) return
         form.setFieldsValue({ ...data })
     }, [form, data])
-    return (
+    return (//${i === UpdateProfileFields.length - 1 ? 'col-span-2' : ''}
         <Form
             onFinish={onUpdateProfile}
             form={form}
@@ -45,7 +45,7 @@ const UpdateProfileForm = ({ image, data }) => {
             }
             {
                 UpdateProfileFields?.map((item, i) => {
-                    return <Form.Item key={item?.name} className={`${i === UpdateProfileFields.length - 1 ? 'col-span-2' : ''} pb-3`}
+                    return <Form.Item key={item?.name} className={` pb-3`}
                         label={<span className='input-label'>{item?.label}</span>}
                         name={item?.name}
                         rules={[

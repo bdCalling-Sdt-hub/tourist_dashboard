@@ -6,7 +6,7 @@ const faqApi = baseApi.injectEndpoints({
         //get all faq
         getAllFaq: builder.query({
             query: () => ({
-                url: `faq/get-faqs`,
+                url: `rules/get-faqs`,
                 method: "GET",
             }),
             providesTags: ['faq']
@@ -15,7 +15,7 @@ const faqApi = baseApi.injectEndpoints({
         addFaq: builder.mutation({
             query: (data) => {
                 return {
-                    url: 'faq/create-faq',
+                    url: 'rules/add-faqs',
                     method: 'POST',
                     body: data
                 }
@@ -26,7 +26,7 @@ const faqApi = baseApi.injectEndpoints({
         deleteFaq: builder.mutation({
             query: (id) => {
                 return {
-                    url: `faq/delete-faq/${id}`,
+                    url: `rules/delete-faqs/${id}`,
                     method: 'DELETE',
                 }
             },

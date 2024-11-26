@@ -11,12 +11,13 @@ const Profile = () => {
     const [tab, set_tab] = useState('edit_profile')
     const [image, setImage] = useState(null)
     const { data, isLoading, isError, error, isFetching } = useGetProfileQuery()
+    console.log(data)
     return (
         <div className='bg-[var(--color-white)] p-4 rounded-md'>
             <PageHeading text={`Profile`} />
             <div className='center-center flex-col gap-6 mt-6 pb-4'>
                 <div className='w-[60%]  mx-auto rounded-md bg-[var(--bg-white)] p-6 center-center flex-col gap-3 relative'>
-                    <img src={image ? URL.createObjectURL(image) : data?.data?.img ? `${url}/${data?.data?.img}` : profileImage} className='w-24 h-24 object-cover rounded-full' alt="profileImage" />
+                    <img src={image ? URL.createObjectURL(image) : data?.data?.profile_image ? `${url}/${data?.data?.profile_image}` : profileImage} className='w-24 h-24 object-cover rounded-full' alt="profileImage" />
                     <p className='heading'>{data?.data?.name}</p>
                     {
                         tab === 'edit_profile' && <label htmlFor="profileImage">

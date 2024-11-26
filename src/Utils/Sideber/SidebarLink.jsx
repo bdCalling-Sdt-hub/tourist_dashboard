@@ -11,11 +11,11 @@ export const SidebarLink = [
         label: 'Dashboard',
         icon: <LuCalendarClock size={24} />,
     },
-    {
-        path: '/users',
-        label: 'User Management',
-        icon: <LuUser2 size={24} />,
-    },
+    // {
+    //     path: '/users',
+    //     label: 'User Management',
+    //     icon: <LuUser2 size={24} />,
+    // },
     {
         path: '/vendors',
         label: 'Vendor Management',
@@ -50,6 +50,10 @@ export const SettingLinks = [
     {
         path: '/privacy-policy',
         label: 'Privacy Policy',
+    },
+    {
+        path: '/about-us',
+        label: 'About Us',
     },
     {
         path: '/terms-&-condition',

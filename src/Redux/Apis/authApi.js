@@ -6,7 +6,7 @@ const authApi = baseApi.injectEndpoints({
         loginUser: builder.mutation({
             query: (data) => {
                 return {
-                    url: 'auth/sign-in',
+                    url: 'auth/login',
                     method: 'POST',
                     body: data
                 }
@@ -64,7 +64,7 @@ const authApi = baseApi.injectEndpoints({
         updateUser: builder.mutation({
             query: (data) => {
                 return {
-                    url: 'auth/update-user',
+                    url: 'auth/edit-profile',
                     method: 'PATCH',
                     body: data,
                 }

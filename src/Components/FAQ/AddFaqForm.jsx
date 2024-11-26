@@ -15,6 +15,7 @@ const AddFaqForm = ({ addFaq, loading, setOpenModal }) => {
                 const item = values.faq[i];
                 try {
                     const res = await addFaq(item).unwrap();
+                    toast.dismiss()
                     toast.success(`FAQ ${i + 1} ${res?.message}` || 'FAQ added successfully');
                     i === values.faq.length - 1 && setOpenModal(false);
                 } catch (err) {
@@ -45,7 +46,7 @@ const AddFaqForm = ({ addFaq, loading, setOpenModal }) => {
 
                                         <Form.Item
                                             {...restField}
-                                            name={[name, 'question']}
+                                            name={[name, 'questions']}
                                             label={<span>Question</span>}
                                             rules={[
                                                 {

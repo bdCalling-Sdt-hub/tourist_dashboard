@@ -6,7 +6,7 @@ const categoryApi = baseApi.injectEndpoints({
         addCategory: builder.mutation({
             query: (data) => {
                 return {
-                    url: 'category/create-category',
+                    url: 'dashboard/category',
                     method: 'POST',
                     body: data,
                 }
@@ -17,8 +17,8 @@ const categoryApi = baseApi.injectEndpoints({
         updateCategory: builder.mutation({
             query: ({ id, data }) => {
                 return {
-                    url: `category/update-category/${id}`,
-                    method: 'PATCH',
+                    url: `dashboard/category?id=${id}`,
+                    method: 'POST',
                     body: data,
                 }
             },
@@ -28,7 +28,7 @@ const categoryApi = baseApi.injectEndpoints({
         getCategory: builder.query({
             query: (page) => {
                 return {
-                    url: `category?page=${page || 1}`,
+                    url: `dashboard/get-category?page=${page || 1}`,
                     method: 'GET',
                 }
             },
@@ -39,7 +39,7 @@ const categoryApi = baseApi.injectEndpoints({
         deleteCategory: builder.mutation({
             query: (id) => {
                 return {
-                    url: `category/delete-category/${id}`,
+                    url: `dashboard/delete-category/${id}`,
                     method: 'DELETE',
                 }
             },

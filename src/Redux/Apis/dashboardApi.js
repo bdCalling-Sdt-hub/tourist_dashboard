@@ -4,7 +4,7 @@ const dashboardApi = baseApi.injectEndpoints({
     //  get dashboard data 
     endpoints: (builder) => ({
         getDashboardData: builder.query({
-            query: () => ({ url: 'overview/admin-overview', method: 'GET' }),
+            query: () => ({ url: 'dashboard/overview', method: 'GET' }),
             providesTags: ['dashboard']
         }),
         getIncomeOverview: builder.query({

@@ -1,5 +1,5 @@
 import React from 'react'
-import RequestTable from '../VendorRequest.jsxt/RequestTable'
+import RequestTable from '../VendorRequest/RequestTable'
 
 const VendorRequest = () => {
     return (

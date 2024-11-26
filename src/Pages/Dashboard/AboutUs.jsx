@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import PageHeading from '../../Components/Shared/PageHeading';
+import PageHeading from '../../Components/Shared/PageHeading'
 import Editor from '../../Components/Shared/Editor';
 import Button from '../../Components/Shared/Button';
-import { useAddAboutUsMutation, useAddTermsMutation, useGetAboutUsQuery, useGetTermsQuery } from '../../Redux/Apis/settingApi';
 import Loading from '../../Components/Shared/Loading';
 import toast from 'react-hot-toast';
+import { useAddAboutUsMutation, useGetAboutUsQuery } from '../../Redux/Apis/settingApi';
+import { Spin } from 'antd';
 
-const TermsCondition = () => {
+
+const AboutUs = () => {
     //states 
     const [content, setContent] = useState('');
     // rtk query
-    const [addAbout, { isLoading }] = useAddTermsMutation();
-    const { data, isLoading: LoadingData, isError, error, isFetching } = useGetTermsQuery()
+    const [addAbout, { isLoading }] = useAddAboutUsMutation();
+    const { data, isLoading: LoadingData, isError, error, isFetching } = useGetAboutUsQuery()
     // handler 
     const AddPrivacyHandler = () => {
         const data = {
@@ -25,13 +27,13 @@ const TermsCondition = () => {
     return (
         <div className='bg-[var(--bg-gray-20)] p-4 rounded-md'>
             {(isLoading || LoadingData) && <Loading />}
-            <PageHeading text={`Terms & Condition`} />
+            <PageHeading text={`About Us`} />
             <div className='mt-10'>
                 <Editor content={content} setContent={setContent} />
             </div>
-            <Button handler={() => AddPrivacyHandler()} text={(isLoading || LoadingData) ? <Loading /> : 'Save Changes'} classNames={`button-black mx-auto mt-6`} />
+            <Button handler={() => AddPrivacyHandler()} text={(isLoading || LoadingData) ? <Spin /> : 'Save Changes'} classNames={`button-black mx-auto mt-6`} />
         </div>
     )
 }
 
-export default TermsCondition
+export default AboutUs

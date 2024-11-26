@@ -8,13 +8,13 @@ export const CategoryFields = [
         type: 'text',
         // accept: 'image'
     },
-    {
-        name: '',
-        label: 'Category Image',
-        // placeholder: 'Health',
-        required: false,
-        message: 'please Select your Category Image',
-        type: 'file',
-        accept: 'image'
-    },
+    // {
+    //     name: '',
+    //     label: 'Category Image',
+    //     // placeholder: 'Health',
+    //     required: false,
+    //     message: 'please Select your Category Image',
+    //     type: 'file',
+    //     accept: 'image'
+    // },
 ]

@@ -3,26 +3,66 @@ import { baseApi } from "../BaseUrl";
 const settingApi = baseApi.injectEndpoints({
     // add Privacy  terms privacy
     endpoints: (build) => ({
-        addAboutTermsPrivacy: build.mutation({
+        addAboutUs: build.mutation({
             query: (data) => ({
-                url: 'settings/update-settings',
+                url: 'rules/add-about-us',
                 method: 'POST',
                 body: data
             }),
-            invalidatesTags: ['settings']
+            invalidatesTags: ['about']
         }),
-        getAboutTermsPrivacy: build.query({
-            query: (type) => ({
-                url: `settings/get-settings/${type}`,
+        getAboutUs: build.query({
+            query: () => ({
+                url: `rules/get-about-us`,
                 method: 'GET'
             }),
-            providesTags: ['settings']
-        })
+            providesTags: ['about']
+        }),
+        addPrivacy: build.mutation({
+            query: (data) => ({
+                url: 'rules/add-facts',
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['privacy']
+        }),
+        getPrivacy: build.query({
+            query: () => ({
+                url: `rules/get-facts`,
+                method: 'GET'
+            }),
+            providesTags: ['privacy']
+        }),
+        addTerms: build.mutation({
+            query: (data) => ({
+                url: '/rules/add-rules',
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['terms']
+        }),
+        getTerms: build.query({
+            query: () => ({
+                url: `rules/get-rules`,
+                method: 'GET'
+            }),
+            providesTags: ['terms']
+        }),
+        getOverView: build.query({
+            query: () => ({
+                url: `dashboard/overview`,
+                method: 'GET'
+            }),
+            providesTags: ['overview']
+        }),
     })
 })
 export const {
-    // add about
-    useAddAboutTermsPrivacyMutation,
-    // get about
-    useGetAboutTermsPrivacyQuery
+    useAddAboutUsMutation,
+    useGetAboutUsQuery,
+    useAddPrivacyMutation,
+    useGetPrivacyQuery,
+    useGetTermsQuery,
+    useAddTermsMutation,
+    useGetOverViewQuery
 } = settingApi

@@ -6,7 +6,7 @@ const categoryApi = baseApi.injectEndpoints({
         addBanner: builder.mutation({
             query: (data) => {
                 return {
-                    url: 'banner/create-banner',
+                    url: 'dashboard/banner_create',
                     method: 'POST',
                     body: data,
                 }
@@ -17,7 +17,7 @@ const categoryApi = baseApi.injectEndpoints({
         updateBanner: builder.mutation({
             query: ({ id, data }) => {
                 return {
-                    url: `banner/update-banner/${id}`,
+                    url: `dashboard/banner_update/${id}`,
                     method: 'PATCH',
                     body: data,
                 }
@@ -38,7 +38,7 @@ const categoryApi = baseApi.injectEndpoints({
         getBanner: builder.query({
             query: (page) => {
                 return {
-                    url: `banner/get-banners?page=${page || 1}&order=asc&sort=order`,
+                    url: `dashboard/banners?page=${page || 1}&order=asc&sort=order`,
                     method: 'GET',
                 }
             },
@@ -49,7 +49,7 @@ const categoryApi = baseApi.injectEndpoints({
         deleteBanner: builder.mutation({
             query: (id) => {
                 return {
-                    url: `banner/delete-banner/${id}`,
+                    url: `dashboard/banner_delete/${id}`,
                     method: 'DELETE',
                 }
             },
