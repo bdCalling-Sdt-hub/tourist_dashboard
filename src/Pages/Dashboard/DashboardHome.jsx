@@ -12,29 +12,28 @@ import TopEvent from '../../Components/Dashboard/TopEvent'
 import VendorRequest from '../../Components/Dashboard/VendorRequest'
 const DashboardHome = () => {
     const { data: overview, isLoading } = useGetDashboardDataQuery()
-    console.log(overview)
     const data = undefined
     const { pending, accepted, rejected, completed } = data?.data?.total_appointment || {}
     const formatData = [
-        {
-            name: 'Total Subscriber',
-            icon: <GrMoney size={36} />,
-            total: `$${data?.data?.total_deduction.toFixed(2) || 0}`
-        },
+        // {
+        //     name: 'Total Subscriber',
+        //     icon: <GrMoney size={36} />,
+        //     total: `$${data?.data?.total_deduction.toFixed(2) || 0}`
+        // },
         {
             name: 'Total Event',
             icon: <MdEvent size={36} />,
-            total: data?.data?.total_doctor || 0
+            total: overview?.data?.totalEvent || 0
         },
-        {
-            name: 'Total Users',
-            icon: <CiUser size={36} />,
-            total: data?.data?.total_user || 0
-        },
+        // {
+        //     name: 'Total Users',
+        //     icon: <CiUser size={36} />,
+        //     total: data?.data?.total_user || 0
+        // },
         {
             name: 'Total Vendor',
             icon: <FaCircleUser size={36} />,
-            total: pending + accepted + rejected + completed || 0
+            total: overview?.data?.totalUser || 0
         },
     ]
     return (
@@ -42,7 +41,7 @@ const DashboardHome = () => {
             {
                 isLoading && <Loading />
             }
-            <div className='grid-4 gap-3'>
+            <div className='grid-2 gap-3'>
                 {
                     formatData?.map((item, i) => <div key={i} className='w-full h-full card-shadow rounded-md p-4 py-6 bg-[var(--color-white)]'>
                         <IncomeCard item={item} />
@@ -51,7 +50,7 @@ const DashboardHome = () => {
             </div>
             <div className='grid-2 gap-3 mt-5'>
                 <Suspense fallback={''}>
-                    <EventOverView />
+                    <EventOverView data={overview?.data?.eventOverview} yearlyGrowth={overview?.data?.yearlyGrowth} monthlyGrowth={overview?.data?.monthlyGrowth} dailyGrowth={overview?.data?.dailyGrowth}/>
                 </Suspense>
                 <Suspense fallback={''}>
                     <TopEvent />

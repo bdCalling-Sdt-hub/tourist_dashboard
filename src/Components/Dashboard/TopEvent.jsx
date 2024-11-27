@@ -1,54 +1,30 @@
 import React from 'react';
 import { Table, Typography, Avatar } from 'antd';
+import { useGetAllEventQuery } from '../../Redux/Apis/eventApis';
+import { url } from '../../Utils/BaseUrl';
 
 const { Text } = Typography;
 
 const TopEvent = () => {
-    const dataSource = [
-        {
-            key: '1',
-            serial: '01',
-            image: 'https://example.com/image-music.jpg', // Replace with actual image URL
-            eventName: 'Music',
-            total: 84,
-        },
-        {
-            key: '2',
-            serial: '02',
-            image: 'https://example.com/image-food-drink.jpg', // Replace with actual image URL
-            eventName: 'Food & Drink',
-            total: 67,
-        },
-        {
-            key: '3',
-            serial: '03',
-            image: 'https://example.com/image-arts-culture.jpg', // Replace with actual image URL
-            eventName: 'Arts & Culture',
-            total: 52,
-        },
-    ];
-
+    const { data } = useGetAllEventQuery({})
+    console.log(data)
     const columns = [
         {
-            title: 'SL no.',
-            dataIndex: 'serial',
-            key: 'serial',
-        },
-        {
             title: 'Event Name',
-            dataIndex: 'eventName',
-            key: 'eventName',
+            dataIndex: 'name',
+            key: 'name',
             render: (text, record) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar src={record.image} style={{ marginRight: 8 }} />
+                    <Avatar src={`${url}/${record.event_image?.[0]}`} style={{ marginRight: 8 }} />
                     {text}
                 </div>
             ),
         },
         {
             title: 'Total',
-            dataIndex: 'total',
-            key: 'total',
+            dataIndex: 'favorites',
+            key: 'favorites',
+            render: (_, record) => <span>{record?.favorites?.length}</span>
         },
     ];
 
@@ -56,7 +32,7 @@ const TopEvent = () => {
         <div className='card-shadow w-full h-full rounded-md'>
             <Text className='p-1 ml-3' strong>Top Event</Text>
             <Table
-                dataSource={dataSource}
+                dataSource={data?.data?.result?.slice(0, 5) || 0}
                 columns={columns}
                 pagination={false}
                 bordered={false}

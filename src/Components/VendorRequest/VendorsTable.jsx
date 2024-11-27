@@ -14,7 +14,6 @@ const VendorsTable = ({ data, meta, setPage, loading }) => {
       })
   };
 
-  console.log(meta)
   const columns = [
     // {
     //   title: 'S no.',
