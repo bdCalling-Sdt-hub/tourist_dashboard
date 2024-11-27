@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { FaCircleUser } from 'react-icons/fa6'
 import { GrMoney } from 'react-icons/gr'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useGetDashboardDataQuery } from '../../Redux/Apis/dashboardApi'
 import Loading from '../../Components/Shared/Loading'
 import IncomeCard from '../../Components/Dashboard/IncomeCard'
@@ -10,9 +10,9 @@ import { MdEvent } from 'react-icons/md'
 import { CiUser } from 'react-icons/ci'
 import TopEvent from '../../Components/Dashboard/TopEvent'
 import VendorRequest from '../../Components/Dashboard/VendorRequest'
-
 const DashboardHome = () => {
     const { data: overview, isLoading } = useGetDashboardDataQuery()
+    console.log(overview)
     const data = undefined
     const { pending, accepted, rejected, completed } = data?.data?.total_appointment || {}
     const formatData = [

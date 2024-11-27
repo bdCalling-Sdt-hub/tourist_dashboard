@@ -2,54 +2,35 @@ import React, { useState } from 'react';
 import { Table, Button, Badge, Tooltip, Modal, Input, Form, DatePicker } from 'antd';
 import { DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { useAcceptEventMutation, useDeclineEventRequestMutation, useDeleteEventRequestMutation, useGetAllEventQuery, useUpdateEventMutation } from '../../Redux/Apis/eventApis';
+import { url } from '../../Utils/BaseUrl';
+import toast from 'react-hot-toast';
 
-const initialData = [
-    {
-        key: '1',
-        serialNo: '#1233',
-        place: 'Costa Rica',
-        eventItem: '/path/to/event1.png',
-        category: 'Music',
-        startTime: '10/06/24',
-        startingDate: '10/06/24',
-        endTime: 'at 7:45 PM',
-        status: 'Active',
-        featured: true,
-        featuredEndDate: '2024-12-31',
-        viewedBy: '14 People'
-    },
-    {
-        key: '2',
-        serialNo: '#1234',
-        place: 'Costa Rica',
-        eventItem: '/path/to/event2.png',
-        category: 'Music',
-        startTime: '10/06/24',
-        startingDate: '10/06/24',
-        endTime: 'at 7:45 PM',
-        status: 'Active',
-        featured: false,
-        featuredEndDate: null,
-        viewedBy: '18 People'
-    },
-];
 
-const EventManagementTable = () => {
-    const [dataSource, setDataSource] = useState(initialData);
+const EventManagementTable = ({ searchTerm }) => {
     const [isDisapproveModalVisible, setIsDisapproveModalVisible] = useState(false);
     const [isFeaturedModalVisible, setIsFeaturedModalVisible] = useState(false);
     const [disapproveReason, setDisapproveReason] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [featuredEndDate, setFeaturedEndDate] = useState(null);
-
+    const { data } = useGetAllEventQuery({ searchTerm })
+    const [approve] = useAcceptEventMutation()
+    const [decline] = useDeclineEventRequestMutation()
+    const [deleteEvent] = useDeleteEventRequestMutation()
+    const [updateEvent] = useUpdateEventMutation()
     const handleDisapproveClick = (record) => {
         setSelectedRecord(record);
         setIsDisapproveModalVisible(true);
     };
 
+    const handleApproveModalOk = (record) => {
+        approve(record?._id).unwrap().then((res) => toast.success(res?.message || 'event Approved Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+    };
+    const handleDelete = (record) => {
+        deleteEvent(record?._id).unwrap().then((res) => toast.success(res?.message || 'event Deleted Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+    };
     const handleDisapproveModalOk = () => {
-        console.log('Disapprove reason:', disapproveReason);
-        console.log('Record:', selectedRecord);
+        decline({ id: selectedRecord?._id, reason: disapproveReason }).unwrap().then((res) => toast.success(res?.message || 'Event Declined')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
         setIsDisapproveModalVisible(false);
         setDisapproveReason('');
         setSelectedRecord(null);
@@ -62,6 +43,7 @@ const EventManagementTable = () => {
     };
 
     const toggleFeaturedStatus = (record) => {
+        console.log(record)
         if (!record.featured) {
             setSelectedRecord(record);
             setIsFeaturedModalVisible(true);
@@ -71,13 +53,12 @@ const EventManagementTable = () => {
     };
 
     const updateFeaturedStatus = (record, endDate, isFeatured) => {
-        setDataSource((prevData) =>
-            prevData.map((item) =>
-                item.key === record.key
-                    ? { ...item, featured: isFeatured, featuredEndDate: endDate }
-                    : item
-            )
-        );
+        if (isFeatured) {
+            updateEvent({ id: record?._id, featured: endDate }).unwrap().then((res) => toast.success(res?.message || 'Event  Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+        } else {
+            updateEvent({ id: record?._id, featured: false }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+        }
+
         setIsFeaturedModalVisible(false);
         setFeaturedEndDate(null);
         setSelectedRecord(null);
@@ -90,22 +71,22 @@ const EventManagementTable = () => {
     };
 
     const columns = [
-        {
-            title: 'SL no.',
-            dataIndex: 'serialNo',
-            key: 'serialNo',
-        },
+        // {
+        //     title: 'SL no.',
+        //     dataIndex: 'serialNo',
+        //     key: 'serialNo',
+        // },
         {
             title: 'Place',
-            dataIndex: 'place',
-            key: 'place',
+            dataIndex: 'address',
+            key: 'address',
         },
         {
             title: 'Event Item',
-            key: 'eventItem',
-            render: () => (
+            key: 'event_image',
+            render: (record) => (
                 <img
-                    src="https://i.ibb.co/4WtRdgz/audience-1853662-1280.jpg"
+                    src={record?.event_image?.[0] ? `${url}/${record?.event_image?.[0]}` : "https://placehold.co/600x400"}
                     alt="Event"
                     className="w-12 h-12 object-cover rounded-md"
                 />
@@ -115,38 +96,42 @@ const EventManagementTable = () => {
             title: 'Category',
             dataIndex: 'category',
             key: 'category',
+            render: (_, record) => <span>{record?.category?.name}</span>
         },
         {
             title: 'Start Time',
-            dataIndex: 'startTime',
-            key: 'startTime',
+            dataIndex: 'time',
+            key: 'time',
         },
         {
             title: 'Starting Date',
-            dataIndex: 'startingDate',
-            key: 'startingDate',
+            dataIndex: 'date',
+            key: 'date',
+            render: (_, record) => <span>{record?.date?.split('T')?.[0]}</span>
         },
         {
-            title: 'End Time',
-            dataIndex: 'endTime',
-            key: 'endTime',
+            title: 'End Date',
+            dataIndex: 'end_date',
+            key: 'end_date',
+            render: (_, record) => <span>{record?.end_date?.split('T')?.[0]}</span>
         },
         {
             title: 'Viewed By',
-            dataIndex: 'viewedBy',
-            key: 'viewedBy',
+            dataIndex: 'favorites',
+            key: 'favorites',
+            render: (_, record) => <span>{record?.favorites?.length}</span>
         },
         {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (status) => {
-                let color;
-                if (status === 'Active') color = 'green';
-                else if (status === 'Upcoming') color = 'yellow';
-                else if (status === 'Completed') color = 'blue';
-                return <Badge color={color} text={status} />;
-            },
+            // render: (status) => {
+            //     let color;
+            //     if (status === 'Active') color = 'green';
+            //     else if (status === 'Upcoming') color = 'yellow';
+            //     else if (status === 'Completed') color = 'blue';
+            //     return <Badge color={color} text={status} />;
+            // },
         },
         {
             title: 'Featured',
@@ -168,24 +153,29 @@ const EventManagementTable = () => {
             key: 'action',
             render: (_, record) => (
                 <div className="flex space-x-2">
-                    <Tooltip title="Approve">
-                        <Button
-                            type="primary"
-                            icon={<CheckOutlined />}
-                            className="bg-green-500 border-none hover:bg-green-600"
-                        />
-                    </Tooltip>
-                    <Tooltip title="Disapprove">
-                        <Button
-                            type="primary"
-                            danger
-                            icon={<CloseOutlined />}
-                            onClick={() => handleDisapproveClick(record)}
-                            className="bg-yellow-500 text-black border-none hover:bg-yellow-600"
-                        />
-                    </Tooltip>
+                    {
+                        record?.status == 'pending' && <>
+                            <Tooltip title="Approve">
+                                <Button onClick={() => handleApproveModalOk(record)}
+                                    type="primary"
+                                    icon={<CheckOutlined />}
+                                    className="bg-green-500 border-none hover:bg-green-600"
+                                />
+                            </Tooltip>
+                            <Tooltip title="Disapprove">
+                                <Button
+                                    type="primary"
+                                    danger
+                                    icon={<CloseOutlined />}
+                                    onClick={() => handleDisapproveClick(record)}
+                                    className="bg-yellow-500 text-black border-none hover:bg-yellow-600"
+                                />
+                            </Tooltip>
+                        </>
+                    }
+
                     <Tooltip title="Delete">
-                        <Button
+                        <Button onClick={() => handleDelete(record)}
                             type="primary"
                             danger
                             icon={<DeleteOutlined />}
@@ -200,7 +190,7 @@ const EventManagementTable = () => {
     return (
         <>
             <Table
-                dataSource={dataSource}
+                dataSource={data?.data?.result || []}
                 columns={columns}
                 pagination={{
                     pageSize: 5,

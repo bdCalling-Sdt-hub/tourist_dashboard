@@ -47,29 +47,34 @@ const CategoryTable = ({ set_selected_data, set_open_category_banner_modal, setA
         // },
         {
             title: 'Category Name',
-            dataIndex: 'category',
-            key: 'category',
-            render: (_, record) => <UserImageName name={record?.name} image={record?.img} />
+            dataIndex: 'name',
+            key: 'name',
+            // render: (_, record) => <UserImageName name={record?.name} image={record?.img} />
         },
         {
             title: 'actions',
             dataIndex: 'key',
             key: 'key ',
             render: (_, record) => <div className='start-center gap-3 w-fit'>
-                <button onClick={() => {
-                    set_selected_data(record)
-                    setAction('update')
-                    set_open_category_banner_modal(true)
-                }} style={{
-                    padding: '10px'
-                }} className='button-black'>
-                    <MdEdit size={24} />
-                </button>
-                <button onClick={() => handleDelete(record?._id)} style={{
-                    padding: '10px'
-                }} className='button-red'>
-                    <MdDelete size={24} />
-                </button>
+                {
+                    record?.name?.toLowerCase()?.includes('promotion') ? <span className='text-red-500'>you can't delete or edit promotion category</span> : <>
+                        <button onClick={() => {
+                            set_selected_data(record)
+                            setAction('update')
+                            set_open_category_banner_modal(true)
+                        }} style={{
+                            padding: '10px'
+                        }} className='button-black'>
+                            <MdEdit size={24} />
+                        </button>
+                        <button onClick={() => handleDelete(record?._id)} style={{
+                            padding: '10px'
+                        }} className='button-red'>
+                            <MdDelete size={24} />
+                        </button>
+                    </>
+                }
+
             </div>
         },
     ]
