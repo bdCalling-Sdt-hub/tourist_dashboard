@@ -57,9 +57,13 @@ const EventManagementTable = ({ searchTerm }) => {
 
     const updateFeaturedStatus = (record, endDate, isFeatured) => {
         if (isFeatured) {
-            updateEvent({ id: record?._id, featured: endDate }).unwrap().then((res) => toast.success(res?.message || 'Event Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
+            const formData = new FormData()
+            formData.append('featured', endDate)
+            updateEvent({ id: record?._id, data: formData }).unwrap().then((res) => toast.success(res?.message || 'Event Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         } else {
-            updateEvent({ id: record?._id, featured: false }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
+            const formData = new FormData()
+            formData.append('featured', false)
+            updateEvent({ id: record?._id, data: formData }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         }
 
         setIsFeaturedModalVisible(false);

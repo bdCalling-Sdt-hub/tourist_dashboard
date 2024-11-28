@@ -34,10 +34,10 @@ const eventApis = baseApi.injectEndpoints({
             invalidatesTags: ['event']
         }),
         updateEvent: builder.mutation({
-            query: ({ id, featured }) => ({
+            query: ({ id, data }) => ({
                 url: `events/update/${id}`,
                 method: 'PATCH',
-                body: { featured }
+                body: data
             }),
             invalidatesTags: ['event']
         }),
