@@ -76,11 +76,11 @@ const EventManagementTable = ({ searchTerm }) => {
         //     dataIndex: 'serialNo',
         //     key: 'serialNo',
         // },
-        {
-            title: 'Place',
-            dataIndex: 'address',
-            key: 'address',
-        },
+        // {
+        //     title: 'Place',
+        //     dataIndex: 'address',
+        //     key: 'address',
+        // },
         {
             title: 'Event Item',
             key: 'event_image',
@@ -119,7 +119,6 @@ const EventManagementTable = ({ searchTerm }) => {
             title: 'Viewed By',
             dataIndex: 'favorites',
             key: 'favorites',
-            render: (_, record) => <span>{record?.favorites?.length}</span>
         },
         {
             title: 'Status',

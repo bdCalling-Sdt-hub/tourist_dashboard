@@ -89,6 +89,8 @@ const Category_Banner_Form = ({ formFor, action, data, close_modal, Files, setFi
                     } else {
                         toast.error('something went wrong')
                     }
+                }).catch(err => {
+                    toast.error(err?.data?.message || 'something went wrong')
                 })
             }
         }

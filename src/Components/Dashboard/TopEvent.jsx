@@ -24,7 +24,6 @@ const TopEvent = () => {
             title: 'Total',
             dataIndex: 'favorites',
             key: 'favorites',
-            render: (_, record) => <span>{record?.favorites?.length}</span>
         },
     ];
 

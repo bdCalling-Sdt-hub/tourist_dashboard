@@ -17,7 +17,7 @@ const RequestTable = () => {
     setSelectedRecord(record);
     setApproveModalVisible(true);
   };
-
+  console.log(data)
   const handleCancel = (record) => {
     setSelectedRecord(record);
     setCancelModalVisible(true);
@@ -47,7 +47,9 @@ const RequestTable = () => {
     setSelectedRecord(null);
     setCancelReason("");
   };
+  const handlerDetails = (record) => {
 
+  }
   const columns = [
     // {
     //   title: 'SL no.',
@@ -74,6 +76,15 @@ const RequestTable = () => {
       key: 'actions',
       render: (_, record) => (
         <div className="flex space-x-2">
+
+          <Button
+            type="primary"
+            className="bg-yellow-500 border-none hover:bg-yellow-600"
+            onClick={() => handlerDetails(record)}
+          >
+            Details
+          </Button>
+
           <Button
             type="primary"
             className="bg-green-500 border-none hover:bg-green-600"
