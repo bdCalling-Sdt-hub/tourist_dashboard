@@ -14,12 +14,12 @@ const Otp = () => {
     const onSubmitLoginForm = value => {
         const data = {
             ...value,
-            phone: JSON.parse(localStorage.getItem('phone'))
+            email: JSON.parse(localStorage.getItem('email'))
         }
         verifyCode(data).unwrap().then((res) => {
             if (res?.success) {
                 localStorage.setItem('accessToken', JSON.stringify(res?.accessToken))
-                toast.success(res.message || 'Phone Number verified successfully')
+                toast.success(res.message || 'Email  verified successfully')
                 return navigate('/reset-password')
             } else {
                 toast.error('something went wrong')
@@ -43,7 +43,7 @@ const Otp = () => {
                 onFinish={onSubmitLoginForm}
             >
                 <p className='auth-heading text-center my-3'>Verify Your Email</p>
-                <p className='text text-center mb-8'>We sent a reset link to contact@dscode...com
+                <p className='text text-center mb-8'>We sent a reset link to your email
                     enter 5 digit code that mentioned in the email</p>
                 <Form.Item
                     className='text-center'

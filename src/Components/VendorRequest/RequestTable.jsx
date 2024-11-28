@@ -3,59 +3,63 @@ import { Button, Table, Modal, Input } from 'antd';
 import { useAcceptVendorMutation, useDeclineRequestMutation, useGetAllVendorQuery } from '../../Redux/Apis/vendorApis';
 import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
 const { TextArea } = Input;
+
 const RequestTable = () => {
-  const { data, isLoading } = useGetAllVendorQuery()
-  const [approve, { isLoading: Loading }] = useAcceptVendorMutation()
-  const [declined,] = useDeclineRequestMutation()
+  const { data, isLoading } = useGetAllVendorQuery();
+  const [approve, { isLoading: Loading }] = useAcceptVendorMutation();
+  const [declined] = useDeclineRequestMutation();
   const [isApproveModalVisible, setApproveModalVisible] = useState(false);
   const [isCancelModalVisible, setCancelModalVisible] = useState(false);
+  const [isDetailsModalVisible, setDetailsModalVisible] = useState(false);  // State for details modal
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [cancelReason, setCancelReason] = useState("");
-  const location = useLocation()
+  const [cancelReason, setCancelReason] = useState('');
+  const location = useLocation();
+
   const handleApprove = (record) => {
     setSelectedRecord(record);
     setApproveModalVisible(true);
   };
-  console.log(data)
+
   const handleCancel = (record) => {
     setSelectedRecord(record);
     setCancelModalVisible(true);
   };
 
+  const handlerDetails = (record) => {
+    setSelectedRecord(record);
+    setDetailsModalVisible(true); // Open the details modal
+  };
+
   const confirmApprove = () => {
-    approve(selectedRecord._id).unwrap()
-      .then(res => {
-        toast.success(res.message || 'Request Approved')
-      }).catch(err => {
-        toast.error(err?.data?.message || 'Something Went wrong')
+    approve(selectedRecord._id)
+      .unwrap()
+      .then((res) => {
+        toast.success(res.message || 'Request Approved');
       })
+      .catch((err) => {
+        toast.error(err?.data?.message || 'Something Went wrong');
+      });
     setApproveModalVisible(false);
     setSelectedRecord(null);
   };
 
   const confirmCancel = () => {
-    declined({ id: selectedRecord._id, reasons: cancelReason, status: 'declined' }).unwrap()
-      .then(res => {
-        console.log(res)
-        toast.success(res.message || 'Request declined')
-      }).catch(err => {
-        console.log(err)
-        toast.error(err?.data?.message || 'Something Went wrong')
+    declined({ id: selectedRecord._id, reasons: cancelReason, status: 'declined' })
+      .unwrap()
+      .then((res) => {
+        toast.success(res.message || 'Request declined');
       })
+      .catch((err) => {
+        toast.error(err?.data?.message || 'Something Went wrong');
+      });
     setCancelModalVisible(false);
     setSelectedRecord(null);
-    setCancelReason("");
+    setCancelReason('');
   };
-  const handlerDetails = (record) => {
 
-  }
   const columns = [
-    // {
-    //   title: 'SL no.',
-    //   dataIndex: 'serialNo',
-    //   key: 'serialNo',
-    // },
     {
       title: 'User Name',
       dataIndex: 'name',
@@ -76,15 +80,13 @@ const RequestTable = () => {
       key: 'actions',
       render: (_, record) => (
         <div className="flex space-x-2">
-
           <Button
             type="primary"
             className="bg-yellow-500 border-none hover:bg-yellow-600"
-            onClick={() => handlerDetails(record)}
+            onClick={() => handlerDetails(record)} // Handle details button click
           >
             Details
           </Button>
-
           <Button
             type="primary"
             className="bg-green-500 border-none hover:bg-green-600"
@@ -107,7 +109,12 @@ const RequestTable = () => {
 
   return (
     <div className="p-4">
-      <Table dataSource={location.pathname == '/' ? data?.data?.slice(0, 4) : data?.data || []} columns={columns} pagination={false} />
+      <Table
+        dataSource={location.pathname === '/' ? data?.data?.slice(0, 4) : data?.data || []}
+        columns={columns}
+        pagination={false}
+      />
+
       {/* Approve Modal */}
       <Modal
         title="Confirm Approval"
@@ -164,6 +171,41 @@ const RequestTable = () => {
           onChange={(e) => setCancelReason(e.target.value)}
           placeholder="Please provide a reason for cancellation"
         />
+      </Modal>
+
+      {/* Details Modal */}
+      <Modal
+        title="Vendor Details"
+        visible={isDetailsModalVisible}
+        onCancel={() => setDetailsModalVisible(false)}
+        footer={[
+          <Button
+            key="close"
+            onClick={() => setDetailsModalVisible(false)}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-700"
+          >
+            Close
+          </Button>,
+        ]}
+        centered
+      >
+        {selectedRecord && (
+          <div>
+            <p><strong>Name:</strong> {selectedRecord.name}</p>
+            <p><strong>Email:</strong> {selectedRecord.email}</p>
+            <p><strong>Phone:</strong> {selectedRecord.phone_number}</p>
+            <p><strong>Address:</strong> {selectedRecord.address}</p>
+            <p><strong>Description:</strong> <span dangerouslySetInnerHTML={{ __html: selectedRecord.description }} /></p>
+            <h3>Questions</h3>
+            <ul>
+              {selectedRecord.questions.map((q, index) => (
+                <li key={index}>
+                  <strong>{q.question}:</strong> {q.answer}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Modal>
     </div>
   );

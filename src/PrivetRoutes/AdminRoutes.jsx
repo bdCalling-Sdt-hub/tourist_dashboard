@@ -1,11 +1,9 @@
 
 import { useGetProfileQuery } from '../Redux/Apis/authApi'
 import Loading from '../Components/Shared/Loading'
-import toast from 'react-hot-toast'
 import { Navigate, useLocation } from 'react-router-dom'
 
 const AdminRoutes = ({ children }) => {
-    return children
     const location = useLocation()
     if (!localStorage.getItem('token')) return <Navigate to={`/login`} state={location.pathname} ></Navigate>
     const { data, isLoading, isError, error, isFetching } = useGetProfileQuery()
@@ -15,7 +13,7 @@ const AdminRoutes = ({ children }) => {
         // toast.error(error?.data?.message || 'something went wrong please login Again')
         return <Navigate to={`/login`} state={location.pathname} ></Navigate>
     }
-    if (data?.data?.role !== 'ADMIN') {
+    if (!data?.data) {
         // toast.dismiss()
         // toast.error('you are not authorized to access this page')
         // localStorage.removeItem('token')

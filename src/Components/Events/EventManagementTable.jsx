@@ -5,32 +5,35 @@ import moment from 'moment';
 import { useAcceptEventMutation, useDeclineEventRequestMutation, useDeleteEventRequestMutation, useGetAllEventQuery, useUpdateEventMutation } from '../../Redux/Apis/eventApis';
 import { url } from '../../Utils/BaseUrl';
 import toast from 'react-hot-toast';
-
+import { FaEye } from 'react-icons/fa6';
 
 const EventManagementTable = ({ searchTerm }) => {
     const [isDisapproveModalVisible, setIsDisapproveModalVisible] = useState(false);
     const [isFeaturedModalVisible, setIsFeaturedModalVisible] = useState(false);
+    const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);  // State for the details modal
     const [disapproveReason, setDisapproveReason] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [featuredEndDate, setFeaturedEndDate] = useState(null);
-    const { data } = useGetAllEventQuery({ searchTerm })
-    const [approve] = useAcceptEventMutation()
-    const [decline] = useDeclineEventRequestMutation()
-    const [deleteEvent] = useDeleteEventRequestMutation()
-    const [updateEvent] = useUpdateEventMutation()
+    const { data } = useGetAllEventQuery({ searchTerm });
+    const [approve] = useAcceptEventMutation();
+    const [decline] = useDeclineEventRequestMutation();
+    const [deleteEvent] = useDeleteEventRequestMutation();
+    const [updateEvent] = useUpdateEventMutation();
     const handleDisapproveClick = (record) => {
         setSelectedRecord(record);
         setIsDisapproveModalVisible(true);
     };
 
     const handleApproveModalOk = (record) => {
-        approve(record?._id).unwrap().then((res) => toast.success(res?.message || 'event Approved Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+        approve(record?._id).unwrap().then((res) => toast.success(res?.message || 'Event Approved Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
     };
+
     const handleDelete = (record) => {
-        deleteEvent(record?._id).unwrap().then((res) => toast.success(res?.message || 'event Deleted Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+        deleteEvent(record?._id).unwrap().then((res) => toast.success(res?.message || 'Event Deleted Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
     };
+
     const handleDisapproveModalOk = () => {
-        decline({ id: selectedRecord?._id, reason: disapproveReason }).unwrap().then((res) => toast.success(res?.message || 'Event Declined')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+        decline({ id: selectedRecord?._id, reason: disapproveReason }).unwrap().then((res) => toast.success(res?.message || 'Event Declined')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         setIsDisapproveModalVisible(false);
         setDisapproveReason('');
         setSelectedRecord(null);
@@ -43,7 +46,7 @@ const EventManagementTable = ({ searchTerm }) => {
     };
 
     const toggleFeaturedStatus = (record) => {
-        console.log(record)
+        console.log(record);
         if (!record.featured) {
             setSelectedRecord(record);
             setIsFeaturedModalVisible(true);
@@ -54,9 +57,9 @@ const EventManagementTable = ({ searchTerm }) => {
 
     const updateFeaturedStatus = (record, endDate, isFeatured) => {
         if (isFeatured) {
-            updateEvent({ id: record?._id, featured: endDate }).unwrap().then((res) => toast.success(res?.message || 'Event  Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+            updateEvent({ id: record?._id, featured: endDate }).unwrap().then((res) => toast.success(res?.message || 'Event Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         } else {
-            updateEvent({ id: record?._id, featured: false }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'something went wrong'))
+            updateEvent({ id: record?._id, featured: false }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         }
 
         setIsFeaturedModalVisible(false);
@@ -70,17 +73,12 @@ const EventManagementTable = ({ searchTerm }) => {
         }
     };
 
+    const handleDetails = (record) => {
+        setSelectedRecord(record);
+        setIsDetailsModalVisible(true);  // Show the details modal
+    };
+
     const columns = [
-        // {
-        //     title: 'SL no.',
-        //     dataIndex: 'serialNo',
-        //     key: 'serialNo',
-        // },
-        // {
-        //     title: 'Place',
-        //     dataIndex: 'address',
-        //     key: 'address',
-        // },
         {
             title: 'Event Item',
             key: 'event_image',
@@ -124,13 +122,6 @@ const EventManagementTable = ({ searchTerm }) => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            // render: (status) => {
-            //     let color;
-            //     if (status === 'Active') color = 'green';
-            //     else if (status === 'Upcoming') color = 'yellow';
-            //     else if (status === 'Completed') color = 'blue';
-            //     return <Badge color={color} text={status} />;
-            // },
         },
         {
             title: 'Featured',
@@ -172,7 +163,13 @@ const EventManagementTable = ({ searchTerm }) => {
                             </Tooltip>
                         </>
                     }
-
+                    <Tooltip title="Details">
+                        <Button onClick={() => handleDetails(record)}
+                            type="primary"
+                            icon={<FaEye />}
+                            className="bg-yellow-500 border-none hover:bg-yellow-600"
+                        />
+                    </Tooltip>
                     <Tooltip title="Delete">
                         <Button onClick={() => handleDelete(record)}
                             type="primary"
@@ -230,8 +227,7 @@ const EventManagementTable = ({ searchTerm }) => {
                 <Form layout="vertical">
                     <Form.Item
                         label="Featured End Date"
-                        rules={[{ required: true, message: 'Please select a featured end date!' }]}
-                    >
+                        rules={[{ required: true, message: 'Please select a featured end date!' }]}>
                         <DatePicker
                             style={{ width: '100%' }}
                             disabledDate={(current) => current && current < moment().endOf('day')}
@@ -239,6 +235,47 @@ const EventManagementTable = ({ searchTerm }) => {
                         />
                     </Form.Item>
                 </Form>
+            </Modal>
+
+            {/* Event Details Modal */}
+            <Modal
+                title="Event Details"
+                visible={isDetailsModalVisible}
+                onCancel={() => setIsDetailsModalVisible(false)}
+                footer={[
+                    <Button
+                        key="close"
+                        onClick={() => setIsDetailsModalVisible(false)}
+                        type="primary"
+                    >
+                        Close
+                    </Button>
+                ]}
+                centered
+                width={800}
+            >
+                {selectedRecord && (
+                    <div className="event-details">
+                        <h3>{selectedRecord.name}</h3>
+                        <p><strong>Description:</strong> {selectedRecord.description}</p>
+                        <p><strong>Category:</strong> {selectedRecord.category?.name}</p>
+                        <p><strong>Date:</strong> {moment(selectedRecord.date).format('MMMM Do YYYY')}</p>
+                        <p><strong>Time:</strong> {selectedRecord.time}</p>
+                        <p><strong>Location:</strong> {selectedRecord.location?.coordinates?.join(', ')}</p>
+                        <p><strong>Social Media Link:</strong> <a href={selectedRecord.social_media} target="_blank" rel="noopener noreferrer">{selectedRecord.social_media}</a></p>
+                        <div>
+                            <strong>Event Images:</strong>
+                            {/* <div className="event-images">
+                                {selectedRecord.event_image?.map((img, index) => (
+                                    <img key={index} src={`${url}${img}`} alt={`Event Image ${index + 1}`} className="event-image" />
+                                ))}
+                            </div> */}
+                            <div className="event-images">
+                                <img src={`${url}${selectedRecord?.event_image?.[0]}`} alt={`Event Image`} className="event-image" />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </Modal>
         </>
     );

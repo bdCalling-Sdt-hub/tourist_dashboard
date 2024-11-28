@@ -1,6 +1,6 @@
 export const ResetPasswordFields = [
     {
-        name: 'password',
+        name: 'newPassword',
         label: 'Password',
         placeholder: 'insert your password',
         required: true,
@@ -8,7 +8,7 @@ export const ResetPasswordFields = [
         type: 'password',
     },
     {
-        name: 'confirm_password',
+        name: 'confirmPassword',
         label: 'Confirm Password',
         placeholder: 'insert your Confirm password',
         required: true,

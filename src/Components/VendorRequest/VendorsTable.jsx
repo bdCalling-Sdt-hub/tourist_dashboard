@@ -3,6 +3,7 @@ import { Table, Button, Dropdown, Menu, Tooltip } from 'antd';
 import UserImageName from '../Shared/UserImageName';
 import { useDeclineRequestMutation } from '../../Redux/Apis/vendorApis';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 const VendorsTable = ({ data, meta, setPage, loading }) => {
   const [activeDeActive,] = useDeclineRequestMutation()
   const toggleStatus = (record) => {
@@ -24,7 +25,9 @@ const VendorsTable = ({ data, meta, setPage, loading }) => {
     {
       title: 'Name',
       key: 'name',
-      render: (_, record) => < UserImageName name={record?.name} image={record?.business_profile} />,
+      render: (_, record) => <Link target='_blank' to={`http://localhost:3000/details/author?id=${record?._id}`}>
+        < UserImageName name={record?.name} image={record?.business_profile} />
+      </Link>,
     },
     {
       title: 'Contact Number',

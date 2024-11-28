@@ -15,8 +15,8 @@ const ForgetPassword = () => {
     const onSubmitLoginForm = value => {
         forgetPassword(value).unwrap().then((res) => {
             if (res?.success) {
-                localStorage.setItem('phone', JSON.stringify(value?.phone))
-                toast.success(res.message || 'a verification code has been sent to Phone Number')
+                localStorage.setItem('email', JSON.stringify(value?.email))
+                toast.success(res.message || 'a verification code has been sent to Email')
                 return navigate('/otp')
             } else {
                 toast.error('something went wrong')
