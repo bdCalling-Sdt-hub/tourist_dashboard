@@ -11,8 +11,8 @@ const dashboardApi = baseApi.injectEndpoints({
             query: (year) => ({ url: `overview/income-overview?year=${year}`, method: 'GET' }),
             providesTags: ['dashboard']
         }),
-        getAppointmentOverview: builder.query({
-            query: (year) => ({ url: `/overview/appointment-overview?year=${year}`, method: 'GET' }),
+        getClickOverview: builder.query({
+            query: () => ({ url: `/events/click-overview`, method: 'GET' }),
             providesTags: ['dashboard']
         }),
     })
@@ -24,6 +24,6 @@ export const {
     // useGetIncomeOverviewQuery
     useGetIncomeOverviewQuery,
     // useGetAppointmentOverviewQuery
-    useGetAppointmentOverviewQuery
+    useGetClickOverviewQuery
 
 } = dashboardApi

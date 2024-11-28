@@ -3,7 +3,7 @@ import RequestTable from '../VendorRequest/RequestTable'
 
 const VendorRequest = () => {
     return (
-        <div>
+        <div className='bg-white'>
             <RequestTable />
         </div>
     )

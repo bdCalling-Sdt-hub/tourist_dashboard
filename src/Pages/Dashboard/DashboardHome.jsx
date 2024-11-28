@@ -10,6 +10,7 @@ import { MdEvent } from 'react-icons/md'
 import { CiUser } from 'react-icons/ci'
 import TopEvent from '../../Components/Dashboard/TopEvent'
 import VendorRequest from '../../Components/Dashboard/VendorRequest'
+import ClickOverview from '../../Components/Dashboard/ClickOverview'
 const DashboardHome = () => {
     const { data: overview, isLoading } = useGetDashboardDataQuery()
     const data = undefined
@@ -50,10 +51,17 @@ const DashboardHome = () => {
             </div>
             <div className='grid-2 gap-3 mt-5'>
                 <Suspense fallback={''}>
-                    <EventOverView data={overview?.data?.eventOverview} yearlyGrowth={overview?.data?.yearlyGrowth} monthlyGrowth={overview?.data?.monthlyGrowth} dailyGrowth={overview?.data?.dailyGrowth}/>
+                    <EventOverView data={overview?.data?.eventOverview} yearlyGrowth={overview?.data?.yearlyGrowth} monthlyGrowth={overview?.data?.monthlyGrowth} dailyGrowth={overview?.data?.dailyGrowth} />
                 </Suspense>
                 <Suspense fallback={''}>
                     <TopEvent />
+                </Suspense>
+            </div>
+            <div className='grid-2 gap-3 mt-5'>
+                <Suspense fallback={''}>
+                    <div className={`col-span-2`} >
+                        <ClickOverview />
+                    </div>
                 </Suspense>
             </div>
             <div className='bg-[var(--bg-white)] p-4 rounded-md mt-5'>
