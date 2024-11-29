@@ -148,7 +148,7 @@ const EventManagementTable = ({ searchTerm }) => {
             render: (_, record) => (
                 <div className="flex space-x-2">
                     {
-                        record?.status == 'pending' || record?.status == 'updated' && <>
+                        (record?.status == 'pending' || record?.status == 'updated') && <>
                             <Tooltip title="Approve">
                                 <Button onClick={() => handleApproveModalOk(record)}
                                     type="primary"
