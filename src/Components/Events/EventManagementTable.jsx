@@ -62,7 +62,7 @@ const EventManagementTable = ({ searchTerm }) => {
             updateEvent({ id: record?._id, data: formData }).unwrap().then((res) => toast.success(res?.message || 'Event Featured Successfully')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         } else {
             const formData = new FormData()
-            formData.append('featured', false)
+            formData.append('featured', '')
             updateEvent({ id: record?._id, data: formData }).unwrap().then((res) => toast.success(res?.message || 'Featured Removed')).catch((err) => toast.error(err?.data?.message || 'Something went wrong'));
         }
 
