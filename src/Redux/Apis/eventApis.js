@@ -35,7 +35,7 @@ const eventApis = baseApi.injectEndpoints({
         }),
         updateEvent: builder.mutation({
             query: ({ id, data }) => ({
-                url: `events/update/${id}`,
+                url: `events/featured/${id}`,
                 method: 'PATCH',
                 body: data
             }),
