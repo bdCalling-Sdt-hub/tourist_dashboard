@@ -3,10 +3,10 @@ import { baseApi } from "../BaseUrl";
 const eventApis = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllEvent: builder.query({
-            query: ({ searchTerm }) => ({
+            query: ({ searchTerm, page }) => ({
                 url: `events/admin`,
                 method: 'GET',
-                params: { searchTerm }
+                params: { searchTerm ,page}
             }),
             providesTags: ['event']
         }),

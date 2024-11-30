@@ -8,13 +8,14 @@ import toast from 'react-hot-toast';
 import { FaEye } from 'react-icons/fa6';
 
 const EventManagementTable = ({ searchTerm }) => {
+    const [page, setPage] = useState(1)
     const [isDisapproveModalVisible, setIsDisapproveModalVisible] = useState(false);
     const [isFeaturedModalVisible, setIsFeaturedModalVisible] = useState(false);
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);  // State for the details modal
     const [disapproveReason, setDisapproveReason] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [featuredEndDate, setFeaturedEndDate] = useState(null);
-    const { data } = useGetAllEventQuery({ searchTerm });
+    const { data } = useGetAllEventQuery({ searchTerm, page });
     const [approve] = useAcceptEventMutation();
     const [decline] = useDeclineEventRequestMutation();
     const [deleteEvent] = useDeleteEventRequestMutation();
@@ -193,9 +194,11 @@ const EventManagementTable = ({ searchTerm }) => {
                 dataSource={data?.data?.result || []}
                 columns={columns}
                 pagination={{
-                    pageSize: 5,
+                    pageSize: data?.data?.meta?.limit || 10,
+                    total: data?.data?.meta?.total || 0,
                     showTotal: (total, range) => `Showing ${range[0]}-${range[1]} of ${total}`,
                     position: ['bottomCenter'],
+                    onChange: (page) => setPage(page)
                 }}
             />
 
