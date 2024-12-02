@@ -28,7 +28,7 @@ export const SidebarLink = [
     },
     {
         path: '/vendor-request',
-        label: 'Advertise with us',
+        label: 'Vendor Request',
         icon: <PiFlagBannerFold size={24} />,
     },
     {

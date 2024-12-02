@@ -98,7 +98,7 @@ const Sidebar = () => {
                 }}
                 className='button-white w-full whitespace-nowrap links'
             >
-                <HiLogout />  Logo Out
+                <HiLogout />  Log Out
             </button>
         </div >
     );

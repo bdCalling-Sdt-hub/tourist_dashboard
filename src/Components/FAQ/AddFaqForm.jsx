@@ -18,6 +18,7 @@ const AddFaqForm = ({ addFaq, loading, setOpenModal }) => {
                     toast.dismiss()
                     toast.success(`FAQ ${i + 1} ${res?.message}` || 'FAQ added successfully');
                     i === values.faq.length - 1 && setOpenModal(false);
+                    i === values.faq.length - 1 && form.resetFields();
                 } catch (err) {
                     toast.error(`FAQ ${i + 1} ${err?.data?.message}` || 'Something went wrong');
                     break;
