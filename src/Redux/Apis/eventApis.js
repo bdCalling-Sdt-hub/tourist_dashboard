@@ -2,11 +2,30 @@ import { baseApi } from "../BaseUrl";
 
 const eventApis = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+        // POST: Create a new event
+        createEvent: builder.mutation({
+            query: (data) => ({
+                url: "events/admin-create",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ['event']
+        }),
+
+        // PATCH: Update an event by ID
+        updateEvents: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/events/update/${id}`, // Dynamically add the event ID
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ['event']
+        }),
         getAllEvent: builder.query({
             query: ({ searchTerm, page }) => ({
                 url: `events/admin`,
                 method: 'GET',
-                params: { searchTerm ,page}
+                params: { searchTerm, page }
             }),
             providesTags: ['event']
         }),
@@ -44,6 +63,8 @@ const eventApis = baseApi.injectEndpoints({
     })
 })
 export const {
+    useUpdateEventsMutation,
+    useCreateEventMutation,
     useGetAllEventQuery,
     useAcceptEventMutation,
     useDeclineEventRequestMutation,

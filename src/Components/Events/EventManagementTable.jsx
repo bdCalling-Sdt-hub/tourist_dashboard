@@ -6,6 +6,8 @@ import { useAcceptEventMutation, useDeclineEventRequestMutation, useDeleteEventR
 import { url } from '../../Utils/BaseUrl';
 import toast from 'react-hot-toast';
 import { FaEye } from 'react-icons/fa6';
+import EventAddEditForm from './EventAddEditForm';
+import { FaEdit } from 'react-icons/fa';
 
 const EventManagementTable = ({ searchTerm }) => {
     const [page, setPage] = useState(1)
@@ -20,6 +22,10 @@ const EventManagementTable = ({ searchTerm }) => {
     const [decline] = useDeclineEventRequestMutation();
     const [deleteEvent] = useDeleteEventRequestMutation();
     const [updateEvent] = useUpdateEventMutation();
+    const [open, setOpen] = useState(false)
+    const closeModal = () => {
+        setOpen(false)
+    }
     const handleDisapproveClick = (record) => {
         setSelectedRecord(record);
         setIsDisapproveModalVisible(true);
@@ -175,6 +181,16 @@ const EventManagementTable = ({ searchTerm }) => {
                             className="bg-yellow-500 border-none hover:bg-yellow-600"
                         />
                     </Tooltip>
+                    <Tooltip title="Details">
+                        <Button onClick={() => {
+                            setSelectedRecord(record)
+                            setOpen(true)
+                        }}
+                            type="primary"
+                            icon={<FaEdit />}
+                            className="bg-yellow-500 border-none hover:bg-yellow-600"
+                        />
+                    </Tooltip>
                     <Tooltip title="Delete">
                         <Button onClick={() => handleDelete(record)}
                             type="primary"
@@ -283,6 +299,15 @@ const EventManagementTable = ({ searchTerm }) => {
                         </div>
                     </div>
                 )}
+            </Modal>
+            <Modal
+                open={open}
+                centered
+                onCancel={() => setOpen(false)}
+                footer={false}
+                width={1000}
+            >
+                <EventAddEditForm selectedData={selectedRecord} closeModal={() => closeModal()} />
             </Modal>
         </>
     );
