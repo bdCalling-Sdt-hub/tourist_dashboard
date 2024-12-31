@@ -30,7 +30,7 @@ const Login = () => {
             window.location.href = location?.state || '/'
             // return navigate(location?.state || '/')
         })
-            .catch((err) => toast.error(err.data.message || 'something went wrong'))
+            .catch((err) => toast.error(err?.data?.message || 'something went wrong'))
     }
     return (
         <div className='h-screen w-full center-center bg-[var(--color-blue-500)]'>
