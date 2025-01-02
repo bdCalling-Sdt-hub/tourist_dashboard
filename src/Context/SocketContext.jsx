@@ -17,28 +17,28 @@ const SocketContext = ({ children }) => {
     const [notifications, setNotifications] = useState([])
     const [notificationLimit, setNotificationLimit] = useState(50)
     const { data: notificationsData, isLoading: isLoadingNotifications } = useGetNotificationsQuery({ page: 1, limit: notificationLimit })
-    useEffect(() => {
-        if (data?.data) {
-            if (notificationsData?.data?.length > 0) {
-                setNotifications(notificationsData?.data)
-            }
-            const socket = io(`http://46.101.79.101:5000?userId=${data?.data?._id}`);
-            setSocket(socket);
-            socket.on("getOnlineUsers", (users) => {
-                setOnlineUsers(users);
-            });
-            socket.on("new-notification", (notification) => {
-                console.log('notification', notification);
-                setNotifications(prev => [notification, ...prev])
-            });
-            return () => socket.close();
-        } else {
-            if (socket) {
-                socket.close();
-                setSocket(null);
-            }
-        }
-    }, [data, notificationsData]);
+    // useEffect(() => {
+    //     if (data?.data) {
+    //         if (notificationsData?.data?.length > 0) {
+    //             setNotifications(notificationsData?.data)
+    //         }
+    //         const socket = io(`http://46.101.79.101:5000?userId=${data?.data?._id}`);
+    //         setSocket(socket);
+    //         socket.on("getOnlineUsers", (users) => {
+    //             setOnlineUsers(users);
+    //         });
+    //         socket.on("new-notification", (notification) => {
+    //             console.log('notification', notification);
+    //             setNotifications(prev => [notification, ...prev])
+    //         });
+    //         return () => socket.close();
+    //     } else {
+    //         if (socket) {
+    //             socket.close();
+    //             setSocket(null);
+    //         }
+    //     }
+    // }, [data, notificationsData]);
     const socketData = {
         socket,
         onlineUsers,
