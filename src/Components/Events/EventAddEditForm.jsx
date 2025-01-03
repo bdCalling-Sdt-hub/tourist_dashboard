@@ -12,7 +12,6 @@ import { useGetCategoryQuery } from '../../Redux/Apis/categoryApi';
 import { useGetVendorsQuery } from '../../Redux/Apis/vendorApis';
 
 const EventAddEditForm = ({ selectedData, closeModal }) => {
-    console.log(selectedData?.vendor?._id)
     const [form] = Form.useForm();
     const [Loading, setLoading] = useState(false);
     const { data: vendors, isFetching } = useGetVendorsQuery({ page: 1, limit: 9999999999 })

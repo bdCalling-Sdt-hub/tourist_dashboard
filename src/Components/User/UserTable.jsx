@@ -39,7 +39,7 @@ const UserTable = () => {
     };
 
     const handleBlockConfirm = () => {
-        console.log(`User blocked: ${selectedUser.userName}`);
+
         setIsBlockModalVisible(false);
         setSelectedUser(null);
     };

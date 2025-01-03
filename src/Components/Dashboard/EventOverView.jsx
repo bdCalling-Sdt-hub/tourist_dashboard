@@ -99,7 +99,7 @@ const EventOverView = ({ data: overview, yearlyGrowth, monthlyGrowth, dailyGrowt
         },
     ]
     //handler
-    return (//showSearch onSearch={(e)=>console.log(e)}
+    return (
         <div className='w-full h-full bg-[var(--color-white)] card-shadow rounded-md p-4'>
             <div className='between-center mb-6'>
                 <ChartsHeading heading={`Event Overview`} growthData={growthData} />

@@ -7,7 +7,7 @@ const { Text } = Typography;
 
 const TopEvent = () => {
     const { data } = useGetAllEventQuery({})
-    console.log(data)
+
     const columns = [
         {
             title: 'Event Name',

@@ -11,7 +11,7 @@ const Profile = () => {
     const [tab, set_tab] = useState('edit_profile')
     const [image, setImage] = useState(null)
     const { data, isLoading, isError, error, isFetching } = useGetProfileQuery()
-    console.log(data)
+
     return (
         <div className='bg-[var(--color-white)] p-4 rounded-md'>
             <PageHeading text={`Profile`} />

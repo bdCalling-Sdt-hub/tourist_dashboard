@@ -15,7 +15,6 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler);
 
 const ClickOverview = () => {
     const { data: Overview } = useGetClickOverviewQuery()
-    console.log(Overview)
     // chart
     const canvasRef = React.useRef(null);
     const data = {
@@ -101,7 +100,7 @@ const ClickOverview = () => {
         },
     ]
     //handler
-    return (//showSearch onSearch={(e)=>console.log(e)}
+    return (
         <div className='w-full h-full bg-[var(--color-white)] card-shadow rounded-md p-4'>
             <div className='between-center mb-6'>
                 <ChartsHeading heading={`Click Overview`} growthData={growthData} />

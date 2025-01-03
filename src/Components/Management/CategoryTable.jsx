@@ -37,7 +37,7 @@ const CategoryTable = ({ set_selected_data, set_open_category_banner_modal, setA
             </span>
         ));
     }
-    console.log(data)
+
     // table columns
     const columns = [
         // {

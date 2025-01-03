@@ -58,7 +58,6 @@ const GetCoordinateMap = ({ setLocationData, close_modal, setLoading }) => {
                     setPlaceName('Unknown place');
                 }
             } catch (error) {
-                console.error('Error fetching place name:', error);
                 setPlaceName('Error fetching place name');
             } finally {
                 setLoading(false);
