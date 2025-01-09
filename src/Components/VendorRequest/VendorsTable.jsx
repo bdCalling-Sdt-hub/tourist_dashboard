@@ -68,8 +68,8 @@ const VendorsTable = ({ data, meta, setPage, loading }) => {
       render: (_, record) => (
         <Link
           target="_blank"
-          to={`https://dashboard.whatsupjaco.com/details/author?id=${record?._id}`}
           // to={`http://localhost:3000/details/author?id=${record?._id}`}
+          to={`https://whatsupjaco.com/details/author?id=${record?._id}`}
         >
           <UserImageName name={record?.name} image={record?.business_profile} />
         </Link>
