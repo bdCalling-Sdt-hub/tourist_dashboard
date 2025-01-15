@@ -70,6 +70,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
       });
       formData.append("event_image", values?.img?.[0]?.originFileObj);
     }
+    console.log(values);
     formData.append("event_image", values?.img?.[0]?.originFileObj);
     if (selectedData?._id) {
       updateEvent({ id: selectedData._id, data: formData })
@@ -97,7 +98,6 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
   const handleFeaturedChange = (e) => {
     setIsFeatured(e.target.checked);
   };
-  console.log(locationData);
   useEffect(() => {
     if (selectedData) {
       form.setFieldsValue({
@@ -276,7 +276,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
           name="description"
           // rules={[{ required: true, message: 'Please enter a description!' }]}
         >
-          <Editor text={text} setText={setText} />
+          <Editor content={text} setContent={setText} />
         </Form.Item>
         <Form.Item name="featured" valuePropName="checked">
           <Checkbox onChange={handleFeaturedChange}>
