@@ -10,11 +10,17 @@ const vendorApis = baseApi.injectEndpoints({
             providesTags: ['vendor']
         }),
         getVendors: builder.query({
-            query: ({ page, searchTerm, limit }) => ({
-                url: `vendor/get-all-vendor`,
-                method: 'GET',
-                params: { page, searchTerm, limit }
-            }),
+            query: ({ page, searchTerm, status, limit }) => {
+                const param = { page, searchTerm, limit }
+                if (status) {
+                    param.status = status
+                }
+                return {
+                    url: `vendor/get-all-vendor`,
+                    method: 'GET',
+                    params: param
+                }
+            },
             providesTags: ['vendor']
         }),
         acceptVendor: builder.mutation({
