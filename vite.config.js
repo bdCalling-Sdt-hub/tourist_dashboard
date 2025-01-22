@@ -8,6 +8,6 @@ export default defineConfig({
     // host: "167.71.179.42",
     // port:'3001'
     // host: "localhost",
-    port: '3001'
+    port: '3000'
   }
 })

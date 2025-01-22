@@ -21,6 +21,7 @@ import {
 } from "../../Redux/Apis/eventApis";
 import { useGetCategoryQuery } from "../../Redux/Apis/categoryApi";
 import { useGetVendorsQuery } from "../../Redux/Apis/vendorApis";
+import moment from "moment";
 
 const EventAddEditForm = ({ selectedData, closeModal }) => {
   const [form] = Form.useForm();
@@ -301,8 +302,9 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
             onChange={(value) => setRenew(value)}
             options={[
               { label: "Unavailable", value: "none" },
-              { label: "Monthly", value: "monthly" },
+              { label: "Daily", value: "daily" },
               { label: "Weekly", value: "weekly" },
+              { label: "Monthly", value: "monthly" },
               { label: "Yearly", value: "yearly" },
             ]}
           />
