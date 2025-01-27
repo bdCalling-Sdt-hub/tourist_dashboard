@@ -25,12 +25,14 @@ import moment from "moment";
 
 const EventAddEditForm = ({ selectedData, closeModal }) => {
   const [form] = Form.useForm();
+
   const [Loading, setLoading] = useState(false);
   const { data: vendors, isFetching } = useGetVendorsQuery({
     page: 1,
     limit: 9999999999,
   });
   const [text, setText] = useState("");
+  const [textS, setTextS] = useState("");
   const [locationData, setLocationData] = useState();
   const [open, setOpen] = useState(false);
   const { data: category, isLoading } = useGetCategoryQuery();
@@ -53,6 +55,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
     values.latitude = locationData?.lng;
     values.longitude = locationData?.lat;
     values.description = text;
+    values.spanishDescription = textS;
     values.recurrence = renew;
     if (isFeatured) {
       values.featured = dayjs(values?.featuredDate).toDate().toISOString();
@@ -108,6 +111,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         time: moment(selectedData?.time, "h:mm A"),
         end_date: dayjs(selectedData?.end_date),
         description: selectedData?.description,
+        spanishDescription: selectedData?.spanishDescription,
         address: selectedData?.address,
         social_media: selectedData?.social_media,
         tag: selectedData?.option,
@@ -121,6 +125,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         // img: imageUrl(selectedData?.event_image)
       });
       setText(selectedData?.description);
+      setTextS(selectedData?.spanishDescription);
       setLocationData({
         lat: selectedData.latitude,
         lng: selectedData.longitude,
@@ -147,6 +152,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
   //     // }
   //     // setLocationData({ lat: data?.data?.location_map?.coordinates?.[0], lng: data?.data?.location_map?.coordinates?.[1], display_name: data?.data?.address });
   // }, [form,])
+  console.log(textS);
   return (
     <div className="p-4">
       <p className="text-2xl text-center mb-2">Add Event</p>
@@ -279,6 +285,15 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         >
           <Editor content={text} setContent={setText} />
         </Form.Item>
+        <Form.Item
+          className={`col-span-2`}
+          label="Spanish Description"
+          name="spanishDescription"
+          // rules={[{ required: true, message: 'Please enter a description!' }]}
+        >
+          <Editor content={textS} setContent={setTextS} />
+        </Form.Item>
+
         <Form.Item name="featured" valuePropName="checked">
           <Checkbox onChange={handleFeaturedChange}>
             Make this Featured{" "}

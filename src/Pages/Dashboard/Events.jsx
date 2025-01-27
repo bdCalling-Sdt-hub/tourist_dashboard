@@ -24,9 +24,11 @@ const Events = () => {
                     </div>
                 </div>
             </div>
+            
             <div className='bg-[var(--color-white)] rounded-md p-2 mt-3'>
                 <EventManagementTable searchTerm={searchTerm} />
             </div>
+
             <Modal
                 open={open}
                 centered
