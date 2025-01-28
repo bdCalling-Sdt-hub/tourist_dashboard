@@ -152,7 +152,6 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
   //     // }
   //     // setLocationData({ lat: data?.data?.location_map?.coordinates?.[0], lng: data?.data?.location_map?.coordinates?.[1], display_name: data?.data?.address });
   // }, [form,])
-  console.log(textS);
   return (
     <div className="p-4">
       <p className="text-2xl text-center mb-2">Add Event</p>
