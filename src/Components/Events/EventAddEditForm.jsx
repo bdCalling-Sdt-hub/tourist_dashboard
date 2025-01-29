@@ -284,14 +284,14 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         >
           <Editor content={text} setContent={setText} />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           className={`col-span-2`}
           label="Spanish Description"
           name="spanishDescription"
           // rules={[{ required: true, message: 'Please enter a description!' }]}
         >
           <Editor content={textS} setContent={setTextS} />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item name="featured" valuePropName="checked">
           <Checkbox onChange={handleFeaturedChange}>
