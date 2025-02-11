@@ -52,6 +52,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
       .toISOString();
     values.end_date = dayjs(values?.end_date).toDate().toISOString();
     values.time = dayjs(values?.time).format("hh:mm A");
+    values.end_time = dayjs(values?.end_time).format("hh:mm A");
     values.latitude = locationData?.lng;
     values.longitude = locationData?.lat;
     values.description = text;
@@ -109,6 +110,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         category: selectedData?.category?._id,
         date: dayjs(selectedData?.date),
         time: moment(selectedData?.time, "h:mm A"),
+        end_time: moment(selectedData?.end_time, "h:mm A"),
         end_date: dayjs(selectedData?.end_date),
         description: selectedData?.description,
         spanishDescription: selectedData?.spanishDescription,
@@ -208,6 +210,13 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
         >
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>
+        <Form.Item
+          label="End Time"
+          name="end_time"
+          rules={[{ required: true, message: "Please select the time!" }]}
+        >
+          <TimePicker use12Hours format="h:mm a" style={{ width: "100%" }} />
+        </Form.Item>
         {/* 
                 <Form.Item<FieldType>
                     label="Duration"
@@ -217,7 +226,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
                 </Form.Item> */}
 
         <Form.Item
-          className={``}
+          className={`col-span-2`}
           label="Tag"
           name="tag"
           rules={[{ required: false, message: "Please select a Tag!" }]}
