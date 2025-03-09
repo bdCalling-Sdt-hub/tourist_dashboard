@@ -46,7 +46,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
       toast.error("Please select event image");
     }
     // values.event_image = values.event_image?.[0]?.originFileObj;
-    values.date = new Date(dayjs(values?.date).toDate().toISOString());
+    values.date = dayjs(values?.date).toDate().toISOString(); //new Date(dayjs(values?.date).toDate().toISOString());
     values.recurrence_end = dayjs(values?.recurrence_end)
       .toDate()
       .toISOString();
@@ -75,7 +75,6 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
       });
       formData.append("event_image", values?.img?.[0]?.originFileObj);
     }
-    console.log(values);
     formData.append("event_image", values?.img?.[0]?.originFileObj);
     if (selectedData?._id) {
       updateEvent({ id: selectedData._id, data: formData })
