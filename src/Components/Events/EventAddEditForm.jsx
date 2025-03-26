@@ -61,6 +61,7 @@ const EventAddEditForm = ({ selectedData, closeModal }) => {
     if (isFeatured) {
       values.featured = dayjs(values?.featuredDate).toDate().toISOString();
     }
+    console.log(values);
     const { img, tag, featuredDate, ...otherFields } = values;
     const formData = new FormData();
     Object.keys(otherFields)?.map((key) => {
