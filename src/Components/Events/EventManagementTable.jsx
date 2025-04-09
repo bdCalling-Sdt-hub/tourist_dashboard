@@ -176,13 +176,17 @@ const EventManagementTable = ({ searchTerm }) => {
       title: "Starting Date",
       dataIndex: "date",
       key: "date",
-      render: (_, record) => <span>{record?.date?.split("T")?.[0]}</span>,
+      render: (_, record) => (
+        <span>{moment(record?.date).format("MMMM Do")}</span>
+      ),
     },
     {
       title: "End Date",
       dataIndex: "end_date",
       key: "end_date",
-      render: (_, record) => <span>{record?.end_date?.split("T")?.[0]}</span>,
+      render: (_, record) => (
+        <span>{moment(record?.end_date).format("MMMM Do")}</span>
+      ),
     },
     {
       title: "Viewed By",
